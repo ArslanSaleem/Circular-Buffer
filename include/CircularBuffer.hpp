@@ -70,6 +70,44 @@ public:
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using indexer = CircularIndexer<size_type, N>;
 
+    CircularBuffer() = default;
+    CircularBuffer(const CircularBuffer &other)
+        : head(0), tail(0), size(0), _buffer()
+    {
+        copy_buffer(other);
+    }
+
+    CircularBuffer(std::initializer_list<T> values)
+    {
+        for (auto val : values)
+        {
+            push_back(std::move(val));
+        }
+    }
+
+    CircularBuffer &operator=(const CircularBuffer &other)
+    {
+        clear();
+        copy_buffer(other);
+        return *this;
+    }
+
+    inline void clear()
+    {
+        head = 0;
+        tail = 0;
+        size = 0;
+    }
+
+    inline void copy_buffer(const CircularBuffer &other)
+    {
+        const_iterator first = other.cbegin();
+        const const_iterator last = other.cend();
+
+        for (; first != last; ++first)
+            push_back(*first);
+    }
+
     T front() const { return size > 0 ? _buffer[head] : T(); }
     T back() const { return size > 0 ? _buffer[tail - 1] : T(); }
     inline constexpr bool full() const noexcept { return size == N; }
@@ -151,6 +189,8 @@ public:
 
     iterator begin() { return iterator(_buffer, head, 0); }
     iterator end() { return iterator(_buffer, head, size); }
+    const_iterator cbegin() const { return const_iterator(_buffer, head, 0); }
+    const_iterator cend() const { return const_iterator(_buffer, head, size); }
     reverse_iterator rbegin() { return reverse_iterator(end()); }
     reverse_iterator rend() { return reverse_iterator(begin()); }
 
