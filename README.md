@@ -1,6 +1,6 @@
 # Circular-Buffer
 
-[![Cmake](https://img.shields.io/badge/cmake-3.21.1-green.svg)]
+![Cmake](https://img.shields.io/badge/cmake-3.21.1-green.svg)
 
 A Header only libray for STL type Circular Buffer that support all the algorithms built for STL containers
 
