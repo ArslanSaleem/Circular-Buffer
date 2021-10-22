@@ -109,7 +109,7 @@ public:
     }
 
     T front() const { return size > 0 ? _buffer[head] : T(); }
-    T back() const { return size > 0 ? _buffer[tail - 1] : T(); }
+    T back() const { return size > 0 ? _buffer[indexer::decrement(tail)] : T(); }
     inline constexpr bool full() const noexcept { return size == N; }
     inline constexpr bool empty() const noexcept { return size == 0; }
 
